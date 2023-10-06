@@ -200,24 +200,26 @@ int main()
                 do {
                     printf("Введите номер плейлиста для редактирования: ");
                     scanf("%d", &playlistNumber);
+                    while (getchar() != '\n');
                 } while (playlistNumber < 1 || playlistNumber > lib->playlistArray->listLength);
 
                 Playlist* chosenPlaylist = &lib->playlistArray->list[playlistNumber - 1];
                 printf("Выбранный плейлист: %s\n", chosenPlaylist->playlistName);
 
-                puts("Меню работы с плейлистом");
-                puts("1. Изменение названия плейлиста");
-                puts("2. Добавление трека в плейлист");
-                puts("3. Удаление трека из плейлиста");
-                puts("4. Вывод списка треков плейлиста");
-                puts("0. Завершить редактирование плейлиста");
-
                 int answer;
                 do {
                     do {
+                        puts("Меню работы с плейлистом");
+                        puts("1. Изменение названия плейлиста");
+                        puts("2. Добавление трека в плейлист");
+                        puts("3. Удаление трека из плейлиста");
+                        puts("4. Вывод списка треков плейлиста");
+                        puts("0. Завершить редактирование плейлиста");
+
                         printf("Выбранный пункт: ");
                         scanf("%d", &answer);
-                    } while (answer < 1 || answer > 4);
+                        while (getchar() != '\n');
+                    } while (answer < 0 || answer > 4);
 
                     switch (answer) {
                     case 0:
@@ -230,6 +232,9 @@ int main()
                         playlistName = (char*)calloc(30, sizeof(char));
                         if (!playlistName)
                             puts(ERROR_MESSAGE);
+
+                        printf("Введите новое название плейлиста: ");
+                        gets_s(playlistName, 30);
 
                         free(chosenPlaylist->playlistName);
                         chosenPlaylist->playlistName = _strdup(playlistName);
